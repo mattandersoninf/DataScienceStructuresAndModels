@@ -20,9 +20,24 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
+m = length(y); % number of training examples
+n = size(X,2); % number of features + 1 (for constant)
 
+h = zeros(m,1);
+grad = zeros(n,1);
 
+for i = 1:m
+  d = X(i,:) * theta;
+  h(i) = 1.0/(1.0+exp(-d));
+end
 
+J = (-1.0/m)*sum(y.*log(h)+(1-y).*log(1-h));
+
+for j = 1:n
+  d = h-y;
+  v = d'*X(:,j);
+  grad(j) = (1.0/m)*sum(v);
+end
 
 % =============================================================
 
